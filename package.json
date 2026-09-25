@@ -8,14 +8,26 @@
     "proof:1": "tsx src/proof-one.ts",
     "test:trajectory": "tsx --test src/trajectory.test.ts",
     "test": "npm run test:trajectory",
-    "typecheck": "tsc --noEmit"
+    "typecheck:engine": "tsc --noEmit",
+    "typecheck:ui": "tsc -p tsconfig.frontend.json --noEmit",
+    "typecheck": "npm run typecheck:engine && npm run typecheck:ui",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@open-gitagent/gitagent": "2.2.0"
+    "@open-gitagent/gitagent": "2.2.0",
+    "lucide-react": "^1.48.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "@types/react": "^19.2.1",
+    "@types/react-dom": "^19.2.1",
+    "@vitejs/plugin-react": "^5.0.4",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vite": "^7.1.7"
   }
 }

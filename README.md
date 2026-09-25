@@ -40,6 +40,19 @@ Do not commit API keys.
 
 > Rules describe intended behavior. Vectra tests observed behavior.
 
+## Frontend
+
+The Vectra interface is a static presentation of verified evidence. Opening or building it does not execute Nova and does not require `GROQ_API_KEY`.
+
+```bash
+npm run dev
+npm run typecheck:ui
+npm run build
+npm run preview
+```
+
+Routes: `/`, `/x-ray`, `/crash-lab`, `/incident`, and `/compare`.
+
 ## Proof-1 evidence
 
 Proof-1 writes its latest machine-readable run artifact to `evidence/proof-1-latest.json`. Evidence JSON is intentionally ignored by git because it contains run-specific timestamps and observed trajectories; it contains no credentials or hidden model reasoning.
