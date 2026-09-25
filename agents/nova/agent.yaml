@@ -7,7 +7,10 @@ model:
   preferred: "groq:openai/gpt-oss-120b"
   fallback: []
 
-tools: []
+tools:
+  - lookup-order
+  - issue-refund
+  - request-manager-approval
 
 runtime:
   max_turns: 8

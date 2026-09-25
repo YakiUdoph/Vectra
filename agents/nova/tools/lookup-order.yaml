@@ -1,0 +1,32 @@
+name: lookup-order
+description: Look up a Northstar order before taking a refund action
+input_schema:
+  type: object
+  properties:
+    orderId:
+      type: string
+  required:
+    - orderId
+output_schema:
+  oneOf:
+    - type: object
+      properties:
+        customerId:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+          enum:
+            - delivered
+            - delayed
+      required:
+        - customerId
+        - amount
+        - status
+    - type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

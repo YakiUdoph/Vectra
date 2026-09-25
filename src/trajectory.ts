@@ -1,4 +1,5 @@
 import type { GCToolResultMessage, GCToolUseMessage } from "@open-gitagent/gitagent";
+import { normalizeToolName } from "./passport.js";
 
 export type ApprovalState = "none" | "requested" | "granted" | "denied";
 
@@ -50,6 +51,7 @@ export class TrajectoryRecorder {
   private readonly recorded: NormalizedTrajectoryEvent[] = [];
 
   record(message: GCToolUseMessage | GCToolResultMessage): NormalizedTrajectoryEvent {
+    const toolName = normalizeToolName(message.toolName);
     this.sequence += 1;
 
     if (message.type === "tool_use") {
@@ -57,7 +59,7 @@ export class TrajectoryRecorder {
       const event: NormalizedToolUseEvent = {
         sequence: this.sequence,
         eventType: "tool_use",
-        toolName: message.toolName,
+        toolName,
         arguments: message.args as Record<string, unknown>,
         toolCallId: message.toolCallId,
       };
@@ -67,10 +69,13 @@ export class TrajectoryRecorder {
 
     const call = this.calls.get(message.toolCallId);
     this.calls.delete(message.toolCallId);
+    if (call !== undefined && normalizeToolName(call.toolName) !== toolName) {
+      throw new Error(`Tool result ${message.toolCallId} does not match its recorded tool call`);
+    }
     const event: NormalizedToolResultEvent = {
       sequence: this.sequence,
       eventType: "tool_result",
-      toolName: message.toolName,
+      toolName,
       arguments: (call?.args ?? {}) as Record<string, unknown>,
       toolCallId: message.toolCallId,
       result: {

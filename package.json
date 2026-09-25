@@ -7,7 +7,8 @@
     "proof": "tsx src/proof-zero.ts",
     "proof:1": "tsx src/proof-one.ts",
     "test:trajectory": "tsx --test src/trajectory.test.ts",
-    "test": "npm run test:trajectory",
+    "test:passport": "tsx --test src/passport.test.ts",
+    "test": "tsx --test src/trajectory.test.ts src/passport.test.ts",
     "typecheck:engine": "tsc --noEmit",
     "typecheck:ui": "tsc -p tsconfig.frontend.json --noEmit",
     "typecheck": "npm run typecheck:engine && npm run typecheck:ui",
@@ -19,7 +20,8 @@
     "@open-gitagent/gitagent": "2.2.0",
     "lucide-react": "^1.48.0",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

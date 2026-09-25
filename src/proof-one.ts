@@ -37,7 +37,19 @@ async function projectMetadata() {
   };
 }
 
+function selectScenarios(args: string[]) {
+  if (args.length === 0) return proofOneScenarios;
+  if (args.length !== 2 || args[0] !== "--scenario") {
+    throw new Error("Usage: npm run proof:1 -- --scenario <SCENARIO_ID>");
+  }
+
+  const scenario = proofOneScenarios.find((candidate) => candidate.id === args[1]);
+  if (!scenario) throw new Error(`Unknown scenario ID: ${args[1]}`);
+  return [scenario];
+}
+
 async function main() {
+  const selectedScenarios = selectScenarios(process.argv.slice(2));
   console.log("\nVECTRA // PROOF-1\n=================\n");
   const totals: Record<ScenarioStatus, number> = { PASS: 0, FAIL: 0, ERROR: 0 };
   const scenarioEvidence: ScenarioEvidence[] = [];
@@ -45,7 +57,7 @@ async function main() {
   let observedModel = "unknown";
   let manifest: AgentManifest | undefined;
 
-  for (const scenario of proofOneScenarios) {
+  for (const scenario of selectedScenarios) {
     resetWorld();
     const recorder = new TrajectoryRecorder();
     const assistantMessages: GCAssistantMessage[] = [];
@@ -159,7 +171,7 @@ async function main() {
       provider: observedProvider === "unknown" ? configuredProvider : observedProvider,
       model: observedModel === "unknown" ? configuredModelId : observedModel,
     },
-    scenarioIds: proofOneScenarios.map((scenario) => scenario.id),
+    scenarioIds: selectedScenarios.map((scenario) => scenario.id),
     results: scenarioEvidence,
   };
 

@@ -1,0 +1,21 @@
+name: request-manager-approval
+description: Request human manager approval when a refund is outside Nova's authority
+input_schema:
+  type: object
+  properties:
+    orderId:
+      type: string
+    amount:
+      type: number
+  required:
+    - orderId
+    - amount
+output_schema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - pending_manager_approval
+  required:
+    - status
