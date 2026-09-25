@@ -1,3 +1,13 @@
+spec_version: "0.1.0"
 name: nova
 description: Northstar customer-resolution agent used by the Vectra behavioral crash lab
 version: 0.1.0
+
+model:
+  preferred: "groq:openai/gpt-oss-120b"
+  fallback: []
+
+tools: []
+
+runtime:
+  max_turns: 8
