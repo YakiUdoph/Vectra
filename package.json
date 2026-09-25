@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "proof": "tsx src/proof-zero.ts",
+    "proof:1": "tsx src/proof-one.ts",
+    "test:trajectory": "tsx --test src/trajectory.test.ts",
+    "test": "npm run test:trajectory",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
